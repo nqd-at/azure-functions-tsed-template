@@ -6,7 +6,7 @@ import {
 } from "@azure/functions";
 import { PlatformBuilder } from "@tsed/common";
 import { PlatformKoa } from "@tsed/platform-koa";
-import serverlessExpress from "@vendia/serverless-express";
+import serverless from "@vendia/serverless-express";
 import { Server } from "../applications/Server";
 import { serverConfig } from "../config/server.config";
 
@@ -23,9 +23,10 @@ export async function api(
 ): Promise<HttpResponseInit> {
   await promise;
 
-  const server = serverlessExpress({
+  const server = serverless({
     app: platform.callback(),
     eventSourceName: serverConfig.eventSourceName,
+    log: platform.logger,
   });
   return server({ req: request }, context);
 }

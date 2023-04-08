@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import {
   app,
   HttpRequest,
@@ -31,7 +32,7 @@ export async function api(
   return server({ req: request }, context);
 }
 
-app.http("api", {
+app.http("rest", {
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   authLevel: "anonymous",
   route: "{*route}",

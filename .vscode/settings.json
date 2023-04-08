@@ -1,0 +1,6 @@
+{
+  "exportall.config.relExclusion": [
+    "/apps/api/src/applications/bootstrap/index.ts",
+    "/apps/api/src/domains/entities/Thing.ts"
+  ]
+}

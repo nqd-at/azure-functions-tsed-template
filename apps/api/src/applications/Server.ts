@@ -1,23 +1,14 @@
-import { PathParams } from "@tsed/common";
-import { Configuration, Controller } from "@tsed/di";
-import { Get } from "@tsed/schema";
+import { Configuration } from "@tsed/di";
+import { configure } from "../lib/configure";
+import { useControllers, useMikroOrm, useSwagger } from "./bootstrap";
+import { appRelativeUrl } from "../lib/url";
+import { databaseConfig } from "../config/database.config";
 
-@Controller("/")
-class IndexController {
-  @Get("/")
-  renderHello() {
-    return "Hello World";
-  }
-
-  @Get("/:name")
-  renderHelloName(@PathParams("name") name: string) {
-    return `Hello ${name}`;
-  }
-}
-
-@Configuration({
-  mount: {
-    "/api": [IndexController],
-  },
-})
+@Configuration(
+  configure(
+    useControllers({ mountPath: appRelativeUrl("rest") }),
+    useMikroOrm({ connectionString: databaseConfig.connectionString }),
+    useSwagger({ path: "docs", fileName: "spec.json" })
+  )
+)
 export class Server {}

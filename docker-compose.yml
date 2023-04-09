@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: "${POSTGRES_DOCKER_NAME-postgres_main}"
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    network_mode: bridge
+  pgadmin:
+    container_name: "${PGADMIN_DOCKER_NAME-pgadmin4_main}"
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    network_mode: bridge
+    restart: unless-stopped
+  # mongo:
+  #   container_name: "${MONGO_DOCKER_NAME-mongo_main}"
+  #   image: mongo
+  #   network_mode: bridge
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - "${TMPDIR:-/tmp/mongo}:/db/data"
+  #   healthcheck:
+  #     test: "bash -c 'mongo --host localhost:27017 --eval \"printjson(rs.status())\"'"
+  #     retries: 5
+  #     interval: 10s
+  redis:
+    container_name: "${REDIS_DOCKER_NAME-redis_main}"
+    image: redis/redis-stack
+    network_mode: bridge
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    healthcheck:
+      test: "bash -c 'redis-cli ping'"
+      retries: 5
+      interval: 10s
+  maildev:
+    container_name: "${MAILDEV_DOCKER_NAME-maildev_main}"
+    image: maildev/maildev
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+volumes:
+  db:
+    driver: local
+  pgadmin:
+    driver: local

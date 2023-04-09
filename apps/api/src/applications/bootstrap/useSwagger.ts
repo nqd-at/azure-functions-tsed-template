@@ -15,7 +15,7 @@ export const useSwagger = (
       {
         path: appRelativeUrl(options.path),
         specVersion: "3.0.1",
-        fileName: options.fileName
+        fileName: options.fileName,
       },
     ],
   };

@@ -16,14 +16,18 @@
   "devDependencies": {
     "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
     "eslint": "^8.38.0",
     "eslint-config-custom": "workspace:*",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
     "prettier": "latest",
-    "turbo": "latest"
+    "turbo": "latest",
+    "typescript": "^5.0.4"
   },
   "engines": {
     "node": ">=14.0.0"

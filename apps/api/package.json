@@ -5,11 +5,12 @@
   "main": "dist/functions/*.js",
   "scripts": {
     "build": "swc --out-dir dist",
-    "watch": "swc --out-dir dist -w src",
+    "watch:build": "swc --out-dir dist -w src",
     "check": "tsc --noEmit",
     "clean": "rimraf dist",
     "start": "func start",
-    "dev": "npm-run-all --parallel watch start",
+    "watch:start": "nodemon --watch dist --delay 1 --exec \"func start\"",
+    "dev": "npm-run-all --parallel watch:build watch:start",
     "predev": "pnpm clean"
   },
   "dependencies": {
@@ -45,6 +46,7 @@
     "aws-lambda": "^1.0.7",
     "azure-functions-core-tools": "^4.x",
     "chokidar": "^3.5.3",
+    "nodemon": "^2.0.22",
     "npm-run-all": "^4.1.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^4.4.1",

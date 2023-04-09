@@ -1,1 +1,1 @@
-export * from './IndexController';
+export * from "./IndexController";
